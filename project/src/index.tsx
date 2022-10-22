@@ -6,8 +6,14 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const HeadFilm = {
+  title: 'The Grand Budapest Hotel',
+  genre: 'Drama',
+  year: 1999,
+};
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App {...HeadFilm} />
   </React.StrictMode>,
 );
