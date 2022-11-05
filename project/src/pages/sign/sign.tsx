@@ -2,7 +2,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import SignInForm from '../../components/sign-in-form/sign-in-form';
 
-export default function SignPage(): JSX.Element {
+export default function Sign(): JSX.Element {
   return (
     <div className="user-page">
       <Header headerClass="page-header user-page__head">
