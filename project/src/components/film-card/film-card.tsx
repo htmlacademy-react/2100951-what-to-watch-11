@@ -9,7 +9,7 @@ export default function FilmCard({film}: FilmCardProps): JSX.Element{
   return(
     <section className="film-card">
       <div className="film-card__bg">
-        <img src={film.posterImg as string} alt={film.name} />
+        <img src={film.posterImg} alt={film.name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
