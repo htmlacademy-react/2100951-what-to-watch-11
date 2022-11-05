@@ -1,11 +1,29 @@
 import ButtonPlay from '../../components/button/button-play';
+import Error from '../errors/error';
+import {useNavigate, useParams} from 'react-router-dom';
+import {getFilmById} from '../../mocks/films';
 
-export default function PlayerPage(): JSX.Element {
+export default function Player(): JSX.Element {
+  const navigate = useNavigate();
+
+  const params = useParams();
+  const film = getFilmById(Number(params.id));
+
+  if (!film) {
+    return <Error />;
+  }
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        type="button"
+        className="player__exit"
+        onClick={() => navigate(-1)}
+      >
+        Exit
+      </button>
 
       <div className="player__controls">
         <div className="player__controls-row">

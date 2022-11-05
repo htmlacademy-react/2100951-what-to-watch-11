@@ -1,62 +1,20 @@
 import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
-import FilmCard from '../../components/movie-card/film-card';
-import UserBlock from '../../components/user-block/user-block';
+import FilmCard from '../../components/film-card/film-card';
+import FilmsList from '../../films-list/films-list';
+import { FilmsType } from '../../types/film';
+import { Helmet } from 'react-helmet-async';
 
-type MainPageProps = {
-    title: string;
-    genre: string;
-    year: number;
+type MainProps = {
+  films: FilmsType;
 }
 
-export default function MainPage(props: MainPageProps): JSX.Element {
+export default function Main({films}: MainProps): JSX.Element {
   return (
     <>
-      <section className="film-card">
-        <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={props.title} />
-        </div>
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <Header headerClass="page-header film-card__head">
-          <UserBlock />
-        </Header>
-
-        <div className="film-card__wrap">
-          <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${props.title} poster`} width="218"
-                height="327"
-              />
-            </div>
-
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{props.title}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.year}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Helmet>
+        <title>WTW main page</title>
+      </Helmet>
+      <FilmCard film={films[20]} />
 
       <div className="page-content">
         <section className="catalog">
@@ -95,28 +53,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-          </div>
+          <FilmsList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

@@ -1,39 +1,38 @@
-import MainPage from '../../pages/main/main';
+import Main from '../../pages/main/main';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import FilmsPage from '../../pages/films/films';
-import SignPage from '../../pages/sign/sign';
+import Sign from '../../pages/sign/sign';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import MyListPage from '../../pages/my-list/my-list';
-import PlayerPage from '../../pages/player/player';
+import MyList from '../../pages/my-list/my-list';
+import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
 import Error from '../../pages/errors/error';
 import PrivateRoute from '../private-route/private-route';
+import { FilmsType } from '../../types/film';
 
 type PageProps = {
-  title: string;
-  genre: string;
-  year: number;
+ films: FilmsType;
 }
 
-export default function App(props: PageProps): JSX.Element {
+export default function App({films}: PageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage {...props} />}
+          element={<Main films={films} />}
         />
         <Route
           path={AppRoute.SignIn}
-          element={<SignPage />}
+          element={<Sign />}
         />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyListPage />
+              <MyList films={films}/>
             </PrivateRoute>
           }
         />
@@ -41,18 +40,19 @@ export default function App(props: PageProps): JSX.Element {
         <Route path={AppRoute.Player}>
           <Route
             path={':id'}
-            element={<PlayerPage />}
+            element={<Player />}
           />
         </Route>
 
         <Route path={AppRoute.Film}>
           <Route
             path={':id'}
-            element={<FilmsPage />}
+            element={<FilmsPage films={films.slice(0, 4)}/>}
           >
           </Route>
+
           <Route
-            path={':id/review'}
+            path={`:id${AppRoute.AddReview}`}
             element={
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
