@@ -46,7 +46,7 @@ export default function App({ films }: PageProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmDetailScreen films={films.slice(0, 4)} />}
+            element={<FilmDetailScreen />}
           />
           <Route
             path={AppRoute.SignIn}

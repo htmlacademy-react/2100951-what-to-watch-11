@@ -17,7 +17,6 @@ export default function Videoplayer({ src, img, isPlaying }: VideoProps): JSX.El
     }
 
     if (isPlaying) {
-      videoRef.current.currentTime = 0;
       videoRef.current.play();
       return;
     }

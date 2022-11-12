@@ -5,20 +5,14 @@ import FilmDetails from '../../components/details/film-details';
 import { getFilmById } from '../../mocks/films';
 import Error from '../errors/error';
 import Overview from '../../components/overview/overview';
-import { FilmsType } from '../../types/film';
 import FilmReviews from '../../components/review/review';
 import Header from '../../components/header/header';
 import UserBlock from '../../components/user-block/user-block';
 import Navigation from '../../components/navigation/navigation';
-import FilmsList from '../../films-list/films-list';
 import Footer from '../../components/footer/footer';
 import { reviews } from '../../mocks/review';
 
-type FilmsListProps = {
-    films: FilmsType;
-}
-
-export default function FilmDetailScreen({ films }: FilmsListProps): JSX.Element {
+export default function FilmDetailScreen(): JSX.Element {
 
   const [currentView, setCurrentView] = useState('overview');
 
@@ -29,12 +23,7 @@ export default function FilmDetailScreen({ films }: FilmsListProps): JSX.Element
     return <Error />;
   }
 
-  /** TODO: убрать из компонента (подумать над реализацией) */
-  function renderSwitchView() {
-    if (!film) {
-      return false;
-    }
-
+  const renderSwitchView = (): JSX.Element => {
     switch (currentView) {
       case 'overview':
         return <Overview film={film} />;
@@ -45,7 +34,8 @@ export default function FilmDetailScreen({ films }: FilmsListProps): JSX.Element
       default:
         return <Overview film={film} />;
     }
-  }
+  };
+
 
   return (
     <>
@@ -114,7 +104,7 @@ export default function FilmDetailScreen({ films }: FilmsListProps): JSX.Element
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmsList films={films} />
+
           </div>
         </section>
 
