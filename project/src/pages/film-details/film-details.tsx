@@ -1,30 +1,50 @@
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
-import UserBlock from '../../components/user-block/user-block';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
+import FilmDetails from '../../components/details/film-details';
 import { getFilmById } from '../../mocks/films';
 import Error from '../errors/error';
-import { useState } from 'react';
-import { FilmsType } from '../../types/film';
+import Overview from '../../components/overview/overview';
+import FilmReviews from '../../components/review/review';
+import Header from '../../components/header/header';
+import UserBlock from '../../components/user-block/user-block';
 import Navigation from '../../components/navigation/navigation';
-import FilmsList from '../../films-list/films-list';
+import Footer from '../../components/footer/footer';
+import { reviews } from '../../mocks/review';
 
-type FilmsProps = {
-  films: FilmsType;
-}
+export default function FilmDetailScreen(): JSX.Element {
 
-export default function FilmsPage({ films }: FilmsProps): JSX.Element {
-
-  const { filmId } = useParams();
-  const film = getFilmById(Number(filmId));
   const [currentView, setCurrentView] = useState('overview');
+
+  const params = useParams();
+  const film = getFilmById(Number(params.id));
 
   if (!film) {
     return <Error />;
   }
+
+  const renderSwitchView = (): JSX.Element => {
+    switch (currentView) {
+      case 'overview':
+        return <Overview film={film} />;
+      case 'details':
+        return <FilmDetails film={film} />;
+      case 'reviews':
+        return <FilmReviews reviews={reviews} />;
+      default:
+        return <Overview film={film} />;
+    }
+  };
+
+
   return (
     <>
       <section className="film-card film-card--full">
+
+        <Helmet>
+          <title>{film.name}</title>
+        </Helmet>
+
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.posterImg} alt={film.name} />
@@ -33,7 +53,7 @@ export default function FilmsPage({ films }: FilmsProps): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header headerClass="page-header film-card__head">
-            <UserBlock />
+            <UserBlock/>
           </Header>
 
           <div className="film-card__wrap">
@@ -58,7 +78,7 @@ export default function FilmsPage({ films }: FilmsProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${film.id}/review`} className="btn film-card__button" >Add review</Link>
               </div>
             </div>
           </div>
@@ -67,27 +87,29 @@ export default function FilmsPage({ films }: FilmsProps): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImg} alt={film.name} width="218"
-                height="327"
-              />
+              <img src={film.posterImg} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
               <Navigation currentView={currentView} handleTabClick={(view: string) => setCurrentView(view)} />
+
+              {renderSwitchView()}
             </div>
           </div>
         </div>
       </section>
+
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmsList films={films} />
+
           </div>
         </section>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
