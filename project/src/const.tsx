@@ -2,9 +2,9 @@ export enum AppRoute {
     Main = '/',
     SignIn = '/login',
     MyList = '/mylist',
-    Film = '/films',
-    AddReview = '/review',
-    Player = '/player'
+    Film = '/films/:id',
+    AddReview = '/films/:id/review',
+    Player = '/player/:id'
 }
 
 export enum AuthorizationStatus {
@@ -14,7 +14,17 @@ export enum AuthorizationStatus {
 }
 
 export enum Nav {
-    Overview = 'overview',
-    Details = 'details',
-    Reviews = 'reviews'
-  }
+    Overview = 'Overview',
+    Details = 'Details',
+    Reviews = 'Reviews'
+}
+
+export enum TimeValue {
+    PreviewStartTimeout = 1000,
+    DefaultSecondsCount = 60,
+    Hundred = 100
+}
+
+export enum ErrorMessage {
+    VideoSupport = 'The video tag is not supported by your browser.'
+}

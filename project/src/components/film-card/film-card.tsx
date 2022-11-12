@@ -5,16 +5,15 @@ import Header from '../header/header';
 type FilmCardProps = {
   film: FilmType;
 }
-export default function FilmCard({film}: FilmCardProps): JSX.Element{
-  return(
+export default function FilmCard({ film }: FilmCardProps): JSX.Element {
+  return (
     <section className="film-card">
       <div className="film-card__bg">
         <img src={film.posterImg} alt={film.name} />
       </div>
 
-      <h1 className="visually-hidden">WTW</h1>
-
-      <Header headerClass="page-header film-card__head" />
+      <Header headerClass="page-header film-card__head" >
+      </Header>
 
       <div className="film-card__wrap">
         <div className="film-card__info">

@@ -2,19 +2,21 @@ import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import FilmsList from '../../films-list/films-list';
 import { FilmsType } from '../../types/film';
-import { Helmet } from 'react-helmet-async';
+import UserBlock from '../../components/user-block/user-block';
+import Header from '../../components/header/header';
 
 type MainProps = {
   films: FilmsType;
 }
 
-export default function Main({films}: MainProps): JSX.Element {
+export default function Main({ films }: MainProps): JSX.Element {
   return (
     <>
-      <Helmet>
-        <title>WTW main page</title>
-      </Helmet>
-      <FilmCard film={films[20]} />
+      <h1 className="visually-hidden">WTW</h1>
+      <Header headerClass="page-header film-card__head">
+        <UserBlock />
+      </Header>
+      <FilmCard film={films[4]} />
 
       <div className="page-content">
         <section className="catalog">
