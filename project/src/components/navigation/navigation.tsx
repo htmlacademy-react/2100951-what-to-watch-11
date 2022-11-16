@@ -2,10 +2,10 @@ import {Nav} from '../../const';
 
 type NavigationProps = {
   currentView: string;
-  handleTabClick: (view: string) => void;
+  onTabClick: (view: string) => void;
 }
 
-export default function Navigation({currentView, handleTabClick}: NavigationProps): JSX.Element {
+export default function Navigation({currentView, onTabClick}: NavigationProps): JSX.Element {
 
   const tabs = Object.values(Nav);
 
@@ -19,7 +19,7 @@ export default function Navigation({currentView, handleTabClick}: NavigationProp
               href="#todo"
               onClick={(evt: React.MouseEvent) => {
                 evt.preventDefault();
-                handleTabClick(item);
+                onTabClick(item);
               }}
               className="film-nav__link"
             >

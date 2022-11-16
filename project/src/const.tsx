@@ -28,3 +28,5 @@ export enum TimeValue {
 export enum ErrorMessage {
     VideoSupport = 'The video tag is not supported by your browser.'
 }
+
+export const DEFAULT_GENRE = 'All genres';

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FilmType } from '../../types/film';
 import Header from '../header/header';
+import UserBlock from '../user-block/user-block';
 
 type FilmCardProps = {
   film: FilmType;
@@ -13,6 +14,7 @@ export default function FilmCard({ film }: FilmCardProps): JSX.Element {
       </div>
 
       <Header headerClass="page-header film-card__head" >
+        <UserBlock />
       </Header>
 
       <div className="film-card__wrap">
