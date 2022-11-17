@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import FilmDetails from '../../components/details/film-details';
-import { getFilmById } from '../../mocks/films';
+import { getFilmById, getFilmsByGenre } from '../../mocks/films';
 import Error from '../errors/error';
 import Overview from '../../components/overview/overview';
 import FilmReviews from '../../components/review/review';
@@ -11,6 +11,7 @@ import UserBlock from '../../components/user-block/user-block';
 import Navigation from '../../components/navigation/navigation';
 import Footer from '../../components/footer/footer';
 import { reviews } from '../../mocks/review';
+import FilmsList from '../../films-list/films-list';
 
 export default function FilmDetailScreen(): JSX.Element {
 
@@ -22,6 +23,8 @@ export default function FilmDetailScreen(): JSX.Element {
   if (!film) {
     return <Error />;
   }
+
+  const relatedFilms = getFilmsByGenre(film.genre);
 
   const renderSwitchView = (): JSX.Element => {
     switch (currentView) {
@@ -53,7 +56,7 @@ export default function FilmDetailScreen(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header headerClass="page-header film-card__head">
-            <UserBlock/>
+            <UserBlock />
           </Header>
 
           <div className="film-card__wrap">
@@ -91,7 +94,9 @@ export default function FilmDetailScreen(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Navigation currentView={currentView} handleTabClick={(view: string) => setCurrentView(view)} />
+              <Navigation currentView={currentView}
+                onTabClick={(view: string) => setCurrentView(view)}
+              />
 
               {renderSwitchView()}
             </div>
@@ -104,7 +109,7 @@ export default function FilmDetailScreen(): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-
+            <FilmsList films={relatedFilms} />
           </div>
         </section>
 

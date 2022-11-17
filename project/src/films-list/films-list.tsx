@@ -32,8 +32,8 @@ export default function FilmsList({ films }: MovieListPropsType): JSX.Element {
         <SmallFilmCard key={`${film.id}`}
           isPlaying={activeFilmId === film.id}
           film={film}
-          handleFilmMouseEnter={() => handleFilmMouseEnter(film.id)}
-          handleFilmMouseOut={handleFilmMouseOut}
+          onFilmMouseEnter={() => handleFilmMouseEnter(film.id)}
+          onFilmMouseOut={handleFilmMouseOut}
         />
       ))}
     </div>

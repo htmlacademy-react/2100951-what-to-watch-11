@@ -7,15 +7,10 @@ import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
 import Error from '../../pages/errors/error';
 import PrivateRoute from '../private-route/private-route';
-import { FilmsType } from '../../types/film';
 import FilmDetailScreen from '../../pages/film-details/film-details';
 import { HelmetProvider } from 'react-helmet-async';
 
-type PageProps = {
-  films: FilmsType;
-}
-
-export default function App({ films }: PageProps): JSX.Element {
+export default function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +18,7 @@ export default function App({ films }: PageProps): JSX.Element {
           <Route
             path={AppRoute.Main}
             element={
-              <Main films={films} />
+              <Main />
             }
           />
           <Route
@@ -32,13 +27,19 @@ export default function App({ films }: PageProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <MyList films={films} />
+                <MyList />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.AddReview}
-            element={<AddReview />}
+            element={
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.NoAuth}
+              >
+                <AddReview />
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Player}

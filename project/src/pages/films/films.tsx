@@ -73,7 +73,7 @@ export default function FilmsPage({ films }: FilmsProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Navigation currentView={currentView} handleTabClick={(view: string) => setCurrentView(view)} />
+              <Navigation currentView={currentView} onTabClick={(view: string) => setCurrentView(view)} />
             </div>
           </div>
         </div>

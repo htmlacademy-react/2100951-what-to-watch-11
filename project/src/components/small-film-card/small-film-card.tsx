@@ -5,16 +5,16 @@ import Videoplayer from '../video-player/video-player';
 type SmallFilmCardProps = {
   film: FilmType;
   isPlaying: boolean;
-  handleFilmMouseEnter: () => void;
-  handleFilmMouseOut: () => void;
+  onFilmMouseEnter: () => void;
+  onFilmMouseOut: () => void;
 }
 
-export default function SmallFilmCard({ film, isPlaying, handleFilmMouseEnter, handleFilmMouseOut }: SmallFilmCardProps): JSX.Element {
+export default function SmallFilmCard({ film, isPlaying, onFilmMouseEnter, onFilmMouseOut }: SmallFilmCardProps): JSX.Element {
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseEnter={handleFilmMouseEnter}
-      onMouseOut={handleFilmMouseOut}
+      onMouseEnter={onFilmMouseEnter}
+      onMouseOut={onFilmMouseOut}
     >
       <div className="small-film-card__image">
         {isPlaying ? '' : <img src={film.posterImg} alt={film.name} width="280" height="175" />}
