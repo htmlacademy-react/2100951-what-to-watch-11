@@ -30,3 +30,5 @@ export enum ErrorMessage {
 }
 
 export const DEFAULT_GENRE = 'All genres';
+
+export const MAX_COUNT = 8;
