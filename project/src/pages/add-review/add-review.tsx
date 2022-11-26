@@ -2,13 +2,15 @@ import { Link, useParams } from 'react-router-dom';
 import AddReviewComponent from '../../components/add-review/add-review';
 import Header from '../../components/header/header';
 import UserBlock from '../../components/user-block/user-block';
-import { getFilmById } from '../../mocks/films';
+import { useAppSelector } from '../../hooks';
+import { getFilmById } from '../../services/film';
 import Error from '../errors/error';
 
 export default function AddReview(): JSX.Element {
 
   const params = useParams();
-  const film = getFilmById(Number(params.id));
+  const films = useAppSelector((state) => state.films);
+  const film = getFilmById(Number(params.id), films);
 
   if (!film) {
     return <Error />;
@@ -17,7 +19,7 @@ export default function AddReview(): JSX.Element {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.posterImg} alt={film.name} />
+          <img src={film.posterImage} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -37,7 +39,7 @@ export default function AddReview(): JSX.Element {
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film.posterImg} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={film.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 
