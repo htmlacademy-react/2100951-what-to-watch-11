@@ -6,7 +6,7 @@ type VideoProps = {
     isPlaying: boolean;
 }
 
-export default function Videoplayer({ src, img, isPlaying }: VideoProps): JSX.Element {
+export default function VideoPlayer({ src, img, isPlaying }: VideoProps): JSX.Element {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 

@@ -9,8 +9,19 @@ import Error from '../../pages/errors/error';
 import PrivateRoute from '../private-route/private-route';
 import FilmDetailScreen from '../../pages/film-details/film-details';
 import { HelmetProvider } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
+import Loading from '../../pages/loading/loading';
 
 export default function App(): JSX.Element {
+
+  const loading = useAppSelector((state) => state.loading);
+
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

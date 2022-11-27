@@ -1,8 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {getFilmById} from '../../mocks/films';
 import {ErrorMessage, TimeValue} from '../../const';
 import Error from '../errors/error';
+import { getFilmById } from '../../services/film';
+import { useAppSelector } from '../../hooks';
 
 export default function Player(): JSX.Element {
 
@@ -11,7 +12,8 @@ export default function Player(): JSX.Element {
   const navigate = useNavigate();
 
   const params = useParams();
-  const film = getFilmById(Number(params.id));
+  const films = useAppSelector((state) => state.films );
+  const film = getFilmById(Number(params.id), films);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
@@ -114,7 +116,7 @@ export default function Player(): JSX.Element {
         src={film.videoLink}
         ref={videoRef}
         className="player__video"
-        poster={film.posterImg}
+        poster={film.posterImage}
         muted={false}
       >
         {ErrorMessage.VideoSupport}

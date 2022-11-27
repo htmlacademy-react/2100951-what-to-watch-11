@@ -32,3 +32,18 @@ export enum ErrorMessage {
 export const DEFAULT_GENRE = 'All genres';
 
 export const MAX_COUNT = 8;
+export const RELETED_COUNT = 4;
+
+export enum APIRoute {
+  Films = '/films',
+  Promo = '/promo',
+}
+
+
+export enum RatingLevel {
+    Bad = 'BAD',
+    Normal = 'NORMAL',
+    Good = 'GOOD',
+    VeryGood = 'VERY_GOOD',
+    Awesome = 'AWESOME',
+  }

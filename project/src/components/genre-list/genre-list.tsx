@@ -1,13 +1,12 @@
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { getFilmsByGenre } from '../../mocks/films';
 import { useAppDispatch } from '../../hooks';
-import { setActiveGenre, setFilmsByGenre } from '../../store/action';
+import { setActiveGenre } from '../../store/action';
 
 
 type GenreListProps = {
-    currentGenre: string;
-    genres: string[];
+  currentGenre: string;
+  genres: string[];
 }
 
 export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Element {
@@ -31,7 +30,6 @@ export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Elemen
             onClick={(evt: React.MouseEvent) => {
               evt.preventDefault();
               dispatch(setActiveGenre({ genre: genre }));
-              dispatch(setFilmsByGenre({ filmsByGenre: getFilmsByGenre(genre) }));
             }}
           >
             {genre}

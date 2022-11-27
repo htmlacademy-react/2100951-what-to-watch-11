@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FilmType } from '../../types/film';
-import Videoplayer from '../video-player/video-player';
+import VideoPlayer from '../video-player/video-player';
 
 type SmallFilmCardProps = {
   film: FilmType;
@@ -17,10 +17,9 @@ export default function SmallFilmCard({ film, isPlaying, onFilmMouseEnter, onFil
       onMouseOut={onFilmMouseOut}
     >
       <div className="small-film-card__image">
-        {isPlaying ? '' : <img src={film.posterImg} alt={film.name} width="280" height="175" />}
-        <Videoplayer
-          src={film.videoLink}
-          img={film.posterImg}
+        <VideoPlayer
+          src={film.previewVideoLink}
+          img={film.posterImage}
           isPlaying={isPlaying}
         />
       </div>

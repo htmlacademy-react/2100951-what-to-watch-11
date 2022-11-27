@@ -10,7 +10,7 @@ export default function FilmCard({ film }: FilmCardProps): JSX.Element {
   return (
     <section className="film-card">
       <div className="film-card__bg">
-        <img src={film.posterImg} alt={film.name} />
+        <img src={film.backgroundImage} alt={film.name} />
       </div>
 
       <Header headerClass="page-header film-card__head" >
@@ -20,7 +20,7 @@ export default function FilmCard({ film }: FilmCardProps): JSX.Element {
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
-            <img src={film.posterImg} alt={film.name} width="218"
+            <img src={film.posterImage} alt={film.name} width="218"
               height="327"
             />
           </div>
