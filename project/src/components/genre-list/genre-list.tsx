@@ -1,15 +1,14 @@
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { setActiveGenre } from '../../store/action';
-
+import {Link} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
+import {setActiveGenre} from '../../store/action';
 
 type GenreListProps = {
   currentGenre: string;
   genres: string[];
 }
 
-export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Element {
+export default function GenresList({currentGenre, genres}: GenreListProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
@@ -21,7 +20,7 @@ export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Elemen
           key={genre}
           className={cn(
             'catalog__genres-item',
-            { 'catalog__genres-item--active': genre === currentGenre }
+            {'catalog__genres-item--active': genre === currentGenre}
           )}
         >
           <Link
@@ -29,7 +28,7 @@ export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Elemen
             className="catalog__genres-link"
             onClick={(evt: React.MouseEvent) => {
               evt.preventDefault();
-              dispatch(setActiveGenre({ genre: genre }));
+              dispatch(setActiveGenre({genre: genre}));
             }}
           >
             {genre}
@@ -40,3 +39,4 @@ export function GenresList({ currentGenre, genres }: GenreListProps): JSX.Elemen
     </ul>
   );
 }
+

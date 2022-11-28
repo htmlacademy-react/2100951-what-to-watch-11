@@ -14,9 +14,10 @@ import Loading from '../../pages/loading/loading';
 
 export default function App(): JSX.Element {
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const loading = useAppSelector((state) => state.loading);
 
-  if (loading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || loading) {
     return (
       <Loading />
     );
@@ -36,7 +37,7 @@ export default function App(): JSX.Element {
             path={AppRoute.MyList}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <MyList />
               </PrivateRoute>
@@ -46,7 +47,7 @@ export default function App(): JSX.Element {
             path={AppRoute.AddReview}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={authorizationStatus}
               >
                 <AddReview />
               </PrivateRoute>
