@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
-import { FilmType } from '../../types/film';
+import { useAppSelector } from '../../hooks';
+import Loading from '../../pages/loading/loading';
 import Header from '../header/header';
 import UserBlock from '../user-block/user-block';
 
-type FilmCardProps = {
-  film: FilmType;
-}
-export default function FilmCard({ film }: FilmCardProps): JSX.Element {
+export default function FilmCard(): JSX.Element {
+  const film = useAppSelector((state) => state.film);
+
+  if (!film) {
+    return (
+      <section className="film-card">
+        <Loading />
+      </section>
+    );
+  }
+
   return (
     <section className="film-card">
       <div className="film-card__bg">

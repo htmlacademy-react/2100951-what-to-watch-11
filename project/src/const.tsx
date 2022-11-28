@@ -37,8 +37,9 @@ export const RELETED_COUNT = 4;
 export enum APIRoute {
   Films = '/films',
   Promo = '/promo',
+  Login = '/login',
+  Logout = '/logout'
 }
-
 
 export enum RatingLevel {
     Bad = 'BAD',

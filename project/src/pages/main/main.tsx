@@ -2,17 +2,15 @@ import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
-import { GenresList } from '../../components/genre-list/genre-list';
 import { useEffect, useState } from 'react';
 import { FilmsType } from '../../types/film';
 import { MAX_COUNT } from '../../const';
 import ShowMore from '../../components/show-more/show-more';
 import { getFilmsByGenre, getGenresList } from '../../services/film';
-import Loading from '../loading/loading';
+import GenresList from '../../components/genre-list/genre-list';
 
 export default function Main(): JSX.Element {
 
-  const film = useAppSelector((state) => state.film);
   const films = useAppSelector((state) => state.films);
   const activeGenre = useAppSelector((state) => state.genre);
   const genresList = getGenresList(films);
@@ -44,8 +42,7 @@ export default function Main(): JSX.Element {
   return (
     <>
       <h1 className="visually-hidden">WTW</h1>
-
-      {film ? <FilmCard film={film} /> : <Loading />}
+      <FilmCard />
 
       <div className="page-content">
         <section className="catalog">

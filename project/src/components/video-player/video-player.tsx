@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { ErrorMessage } from '../../const';
 
 type VideoProps = {
     src: string;
@@ -32,6 +33,7 @@ export default function VideoPlayer({ src, img, isPlaying }: VideoProps): JSX.El
       muted
       loop
     >
+      {ErrorMessage.VideoSupport}
     </video>
   );
 }

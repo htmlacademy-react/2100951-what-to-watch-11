@@ -4,11 +4,11 @@ import SmallFilmCard from '../components/small-film-card/small-film-card';
 
 const TIMEOUT = 1000;
 
-export type MovieListPropsType = {
+export type FilmsListProps = {
   films: FilmsType;
 }
 
-export default function FilmsList({ films }: MovieListPropsType): JSX.Element {
+export default function FilmsList({ films }: FilmsListProps): JSX.Element {
   const [activeFilmId, setActiveFilmId] = useState(0);
 
   let timeoutId: NodeJS.Timeout | null = null;
