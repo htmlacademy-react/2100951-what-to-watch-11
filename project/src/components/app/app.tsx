@@ -1,5 +1,5 @@
 import Main from '../../pages/main/main';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Sign from '../../pages/sign/sign';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MyList from '../../pages/my-list/my-list';
@@ -11,13 +11,15 @@ import FilmDetailScreen from '../../pages/film-details/film-details';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-router/history-router';
 
 export default function App(): JSX.Element {
 
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const loading = useAppSelector((state) => state.loading);
+  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || loading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
     return (
       <Loading />
     );
@@ -25,7 +27,7 @@ export default function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -70,7 +72,7 @@ export default function App(): JSX.Element {
             element={<Error />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

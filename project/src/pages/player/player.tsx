@@ -1,8 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {ErrorMessage, TimeValue} from '../../const';
 import Error from '../errors/error';
-import { getFilmById } from '../../services/film';
 import { useAppSelector } from '../../hooks';
 
 export default function Player(): JSX.Element {
@@ -11,9 +10,7 @@ export default function Player(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const params = useParams();
-  const films = useAppSelector((state) => state.films );
-  const film = getFilmById(Number(params.id), films);
+  const film = useAppSelector((state) => state.film);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);

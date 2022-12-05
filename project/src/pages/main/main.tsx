@@ -8,11 +8,12 @@ import { MAX_COUNT } from '../../const';
 import ShowMore from '../../components/show-more/show-more';
 import { getFilmsByGenre, getGenresList } from '../../services/film';
 import GenresList from '../../components/genre-list/genre-list';
+import { Helmet } from 'react-helmet-async';
 
 export default function Main(): JSX.Element {
 
   const films = useAppSelector((state) => state.films);
-  const activeGenre = useAppSelector((state) => state.genre);
+  const activeGenre = useAppSelector((state) => state.activeGenre);
   const genresList = getGenresList(films);
 
   const [filmsByGenre, sefFilmsByGenre] = useState<FilmsType>([]);
@@ -41,7 +42,9 @@ export default function Main(): JSX.Element {
 
   return (
     <>
-      <h1 className="visually-hidden">WTW</h1>
+      <Helmet>
+        <title>WTW main page</title>
+      </Helmet>
       <FilmCard />
 
       <div className="page-content">
