@@ -1,16 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AddReviewComponent from '../../components/add-review/add-review';
 import Header from '../../components/header/header';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { getFilmById } from '../../services/film';
 import Error from '../errors/error';
 
 export default function AddReview(): JSX.Element {
 
-  const params = useParams();
-  const films = useAppSelector((state) => state.films);
-  const film = getFilmById(Number(params.id), films);
+  const film = useAppSelector((state) => state.film);
 
   if (!film) {
     return <Error />;

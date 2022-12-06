@@ -8,11 +8,11 @@ export default function ReviewCard({review}: ReviewCardProps): JSX.Element {
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{review.text}</p>
+        <p className="review__text">{review.comment}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{review.author}</cite>
-          <time className="review__date" dateTime={review.date}>{review.formatDate}</time>
+          <cite className="review__author">{review.user?.name}</cite>
+          <time className="review__date" dateTime={review.date}>{review.date}</time>
         </footer>
       </blockquote>
 

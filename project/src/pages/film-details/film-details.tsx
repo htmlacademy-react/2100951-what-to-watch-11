@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import FilmDetails from '../../components/details/film-details';
@@ -11,21 +11,47 @@ import Navigation from '../../components/navigation/navigation';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
-import { getFilmById, getFilmsByGenre } from '../../services/film';
-import { Nav, RELETED_COUNT } from '../../const';
-import { reviews } from '../../mocks/review';
+import { getFilmsByGenre } from '../../services/film';
+import { AuthorizationStatus, Nav, RELETED_COUNT } from '../../const';
+import Loading from '../loading/loading';
+import { store } from '../../store';
+import { fetchFilmAction, fetchReviewsAction } from '../../store/api-action';
 
 export default function FilmDetailScreen(): JSX.Element {
 
   const [currentView, setCurrentView] = useState('overview');
 
   const params = useParams();
+  useEffect(() => {
+    let isFilmDetailMounted = true;
+
+    if (isFilmDetailMounted) {
+      store.dispatch(fetchFilmAction(Number(params.id)));
+      store.dispatch(fetchReviewsAction(Number(params.id)));
+    }
+
+    return () => {
+      isFilmDetailMounted = false;
+    };
+  }, [params.id]);
+
+  const reviews = useAppSelector((state) => state.reviews);
   const films = useAppSelector((state) => state.films);
-  const film = getFilmById(Number(params.id), films);
+  const film = useAppSelector((state) => state.film);
+
+  const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (isFilmDataLoading) {
+    return (
+      <Loading />
+    );
+  }
 
   if (!film) {
     return <Error />;
   }
+
   const relatedFilms = getFilmsByGenre(film.genre, films).slice(0, RELETED_COUNT);
 
   const renderSwitchView = (): JSX.Element => {
@@ -82,7 +108,8 @@ export default function FilmDetailScreen(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button" >Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth &&
+                  <Link to={`/films/${film.id}/review`} className="btn film-card__button" >Add review</Link>}
               </div>
             </div>
           </div>

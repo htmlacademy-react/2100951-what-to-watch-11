@@ -5,7 +5,7 @@ import Header from '../header/header';
 import UserBlock from '../user-block/user-block';
 
 export default function FilmCard(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector((state) => state.promo);
 
   if (!film) {
     return (
@@ -20,6 +20,8 @@ export default function FilmCard(): JSX.Element {
       <div className="film-card__bg">
         <img src={film.backgroundImage} alt={film.name} />
       </div>
+
+      <h1 className="visually-hidden">WTW</h1>
 
       <Header headerClass="page-header film-card__head" >
         <UserBlock />
