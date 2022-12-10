@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { memo } from 'react';
 import Logo from '../logo/logo';
 
 type HeaderProps = {
@@ -7,7 +8,7 @@ type HeaderProps = {
   filmCount?: number;
 }
 
-export default function Header({ children, headerClass, filmCount }: HeaderProps): JSX.Element {
+function Header({ children, headerClass, filmCount }: HeaderProps): JSX.Element {
   const isMyListPage = filmCount !== undefined;
 
   return (
@@ -27,3 +28,6 @@ export default function Header({ children, headerClass, filmCount }: HeaderProps
     </header >
   );
 }
+
+
+export default memo(Header, (prevProps, nextProps) => prevProps.filmCount === nextProps.filmCount);

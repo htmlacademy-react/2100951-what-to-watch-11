@@ -3,10 +3,11 @@ import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
+import { getFilms } from '../../store/film-data/selectors';
 
 export default function MyList(): JSX.Element {
 
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector(getFilms);
 
   return (
     <div className="user-page">

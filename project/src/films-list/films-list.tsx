@@ -1,5 +1,5 @@
 import { FilmsType } from '../types/film';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import SmallFilmCard from '../components/small-film-card/small-film-card';
 
 const TIMEOUT = 1000;
@@ -8,7 +8,7 @@ export type FilmsListProps = {
   films: FilmsType;
 }
 
-export default function FilmsList({ films }: FilmsListProps): JSX.Element {
+function FilmsList({ films }: FilmsListProps): JSX.Element {
   const [activeFilmId, setActiveFilmId] = useState(0);
 
   let timeoutId: NodeJS.Timeout | null = null;
@@ -39,3 +39,8 @@ export default function FilmsList({ films }: FilmsListProps): JSX.Element {
     </div>
   );
 }
+
+export default memo(FilmsList, (prevProps, nextProps) => {
+  const isEqual = JSON.stringify(prevProps.films) === JSON.stringify(nextProps.films);
+  return isEqual;
+});
