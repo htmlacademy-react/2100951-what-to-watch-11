@@ -1,8 +1,12 @@
-import {useState, useEffect, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {ErrorMessage, TimeValue} from '../../const';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ErrorMessage, TimeValue } from '../../const';
 import Error from '../errors/error';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFilmAction } from '../../store/api-action';
+import { getFilm, getFilmDataLoadingStatus } from '../../store/film-data/selectors';
+import Loading from '../loading/loading';
 
 export default function Player(): JSX.Element {
 
@@ -10,7 +14,21 @@ export default function Player(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const film = useAppSelector((state) => state.film);
+  const params = useParams();
+
+  useEffect(() => {
+    let isFilmDetailMounted = true;
+
+    if (isFilmDetailMounted) {
+      store.dispatch(fetchFilmAction(Number(params.id)));
+    }
+
+    return () => {
+      isFilmDetailMounted = false;
+    };
+  }, [params.id]);
+
+  const film = useAppSelector(getFilm);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
@@ -80,6 +98,13 @@ export default function Player(): JSX.Element {
     return () => setFullScreen(false);
   }, [fullScreen]);
 
+  const isFilmDataLoading = useAppSelector(getFilmDataLoadingStatus);
+
+  if (isFilmDataLoading) {
+    return (
+      <Loading />
+    );
+  }
 
   if (!film) {
     return <Error />;
@@ -131,7 +156,7 @@ export default function Player(): JSX.Element {
         <div className="player__controls-row">
           <div className="player__time">
             <progress className="player__progress" value={currentTime} max={durationTime}></progress>
-            <div className="player__toggler" style={{left: tooglerValue}}>Toggler</div>
+            <div className="player__toggler" style={{ left: tooglerValue }}>Toggler</div>
           </div>
           <div className="player__time-value">{countTimeLeft()}</div>
         </div>

@@ -16,6 +16,8 @@ import { AuthorizationStatus, Nav, RELETED_COUNT } from '../../const';
 import Loading from '../loading/loading';
 import { store } from '../../store';
 import { fetchFilmAction, fetchReviewsAction } from '../../store/api-action';
+import { getReviews, getFilms, getFilm, getFilmDataLoadingStatus } from '../../store/film-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 export default function FilmDetailScreen(): JSX.Element {
 
@@ -35,12 +37,11 @@ export default function FilmDetailScreen(): JSX.Element {
     };
   }, [params.id]);
 
-  const reviews = useAppSelector((state) => state.reviews);
-  const films = useAppSelector((state) => state.films);
-  const film = useAppSelector((state) => state.film);
-
-  const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const reviews = useAppSelector(getReviews);
+  const films = useAppSelector(getFilms);
+  const film = useAppSelector(getFilm);
+  const isFilmDataLoading = useAppSelector(getFilmDataLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isFilmDataLoading) {
     return (

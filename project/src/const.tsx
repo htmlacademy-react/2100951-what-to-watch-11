@@ -35,11 +35,11 @@ export const MAX_COUNT = 8;
 export const RELETED_COUNT = 4;
 
 export enum APIRoute {
-  Films = '/films',
-  Promo = '/promo',
-  Login = '/login',
-  Logout = '/logout',
-  Reviews = '/comments',
+    Films = '/films',
+    Promo = '/promo',
+    Login = '/login',
+    Logout = '/logout',
+    Reviews = '/comments',
 }
 
 export enum RatingLevel {
@@ -48,4 +48,10 @@ export enum RatingLevel {
     Good = 'GOOD',
     VeryGood = 'VERY_GOOD',
     Awesome = 'AWESOME',
-  }
+}
+
+
+export enum NameSpace {
+    Data = 'DATA',
+    User = 'USER',
+}

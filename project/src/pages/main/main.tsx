@@ -9,11 +9,12 @@ import ShowMore from '../../components/show-more/show-more';
 import { getFilmsByGenre, getGenresList } from '../../services/film';
 import GenresList from '../../components/genre-list/genre-list';
 import { Helmet } from 'react-helmet-async';
+import { getActiveGenre, getFilms } from '../../store/film-data/selectors';
 
 export default function Main(): JSX.Element {
 
-  const films = useAppSelector((state) => state.films);
-  const activeGenre = useAppSelector((state) => state.activeGenre);
+  const films = useAppSelector(getFilms);
+  const activeGenre = useAppSelector(getActiveGenre);
   const genresList = getGenresList(films);
 
   const [filmsByGenre, sefFilmsByGenre] = useState<FilmsType>([]);

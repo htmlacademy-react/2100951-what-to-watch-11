@@ -1,11 +1,13 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
+import { getPromo } from '../../store/film-data/selectors';
 import Header from '../header/header';
 import UserBlock from '../user-block/user-block';
 
-export default function FilmCard(): JSX.Element {
-  const film = useAppSelector((state) => state.promo);
+function FilmCard(): JSX.Element {
+  const film = useAppSelector(getPromo);
 
   if (!film) {
     return (
@@ -64,3 +66,4 @@ export default function FilmCard(): JSX.Element {
   );
 }
 
+export default memo(FilmCard);

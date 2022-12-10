@@ -1,18 +1,14 @@
-import { useState, FormEvent, useEffect, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthorizationStatus, AppRoute } from '../../const';
-import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useState, FormEvent, ChangeEvent } from 'react';
+import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-action';
 import { AuthData } from '../../types/auth-data';
 
 export default function SignInForm(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -28,12 +24,6 @@ export default function SignInForm(): JSX.Element {
       });
     }
   };
-
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      navigate(AppRoute.Main);
-    }
-  }, [authorizationStatus, navigate]);
 
   return (
     <form

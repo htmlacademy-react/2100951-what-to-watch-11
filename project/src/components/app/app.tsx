@@ -1,7 +1,7 @@
 import Main from '../../pages/main/main';
 import { Route, Routes } from 'react-router-dom';
 import Sign from '../../pages/sign/sign';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MyList from '../../pages/my-list/my-list';
 import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
@@ -13,17 +13,27 @@ import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFilmsDataLoadingStatus, getErrorStatus } from '../../store/film-data/selectors';
 
 export default function App(): JSX.Element {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
+  if (!isAuthChecked || isFilmsDataLoading) {
     return (
       <Loading />
     );
   }
+
+  if (hasError) {
+    return (
+      <Error />);
+  }
+
 
   return (
     <HelmetProvider>

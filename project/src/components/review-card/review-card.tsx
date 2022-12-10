@@ -1,4 +1,5 @@
 import {ReviewType} from '../../types/review';
+import dayjs from 'dayjs';
 
 type ReviewCardProps = {
   review: ReviewType;
@@ -12,7 +13,7 @@ export default function ReviewCard({review}: ReviewCardProps): JSX.Element {
 
         <footer className="review__details">
           <cite className="review__author">{review.user?.name}</cite>
-          <time className="review__date" dateTime={review.date}>{review.date}</time>
+          <time className="review__date" dateTime={review.date}>{dayjs(review.date).format('MMMM D, YYYY')}</time>
         </footer>
       </blockquote>
 
