@@ -9,13 +9,16 @@ import ShowMore from '../../components/show-more/show-more';
 import { getFilmsByGenre, getGenresList } from '../../services/film';
 import GenresList from '../../components/genre-list/genre-list';
 import { Helmet } from 'react-helmet-async';
-import { getActiveGenre, getFilms } from '../../store/film-data/selectors';
+import { getFilms, getFilteredFilms } from '../../store/film-data/selectors';
+import { getGenreFilter, getShownFilmsCount } from '../../store/app-process/selectors';
 
 export default function Main(): JSX.Element {
 
   const films = useAppSelector(getFilms);
-  const activeGenre = useAppSelector(getActiveGenre);
+  const activeGenre = useAppSelector(getGenreFilter);
   const genresList = useMemo(() => getGenresList(films).slice(0, MAX_GENRE_COUNT), [films]);
+  const filteredFilms = useAppSelector(getFilteredFilms);
+  const filmsCount = useAppSelector(getShownFilmsCount);
 
   const [filmsByGenre, sefFilmsByGenre] = useState<FilmsType>([]);
   const [filmCards, setFilmCards] = useState<FilmsType>([]);
@@ -53,9 +56,9 @@ export default function Main(): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList currentGenre={activeGenre} genres={genresList} />
 
-          <FilmsList films={filmCards} />
+          <FilmsList films={filteredFilms.slice(0, filmsCount)} />
 
-          {filmsByGenre.length > filmCards.length && <ShowMore onMore={handleMoreButtonClick} />}
+          {((filteredFilms.length - filmsCount) > 0) && <ShowMore onMore={handleMoreButtonClick} />}
         </section>
 
         <Footer />

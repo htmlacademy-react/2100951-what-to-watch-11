@@ -9,7 +9,6 @@ export type FilmData = {
   film?: FilmType;
   films: FilmsType;
   reviews: ReviewsType;
-  activeGenre: string;
   isFilmDataLoading: boolean;
   isFilmsDataLoading: boolean;
   favorites: FilmsType;
@@ -20,6 +19,17 @@ export type FilmData = {
 export type UserProcess = {
   user?: UserData;
   authorizationStatus: AuthorizationStatus;
+};
+
+export type AppProcess = {
+  genreFilter: string;
+  shownFilmsCount: number;
+};
+
+export type DataProcess = {
+  films: FilmsType;
+  promoFilm: FilmType | null;
+  isLoading: boolean;
 };
 
 export type State = ReturnType<typeof store.getState>;

@@ -1,12 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DEFAULT_GENRE, NameSpace } from '../../const';
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace } from '../../const';
 import { FilmData } from '../../types/state';
 import { fetchFilmsAction, fetchPromoAction, fetchFilmAction, fetchReviewsAction, fetchFavoritesAction } from '../api-action';
 
 const initialState: FilmData = {
   films: [],
   reviews: [],
-  activeGenre: DEFAULT_GENRE as string,
   isFilmDataLoading: false,
   isFilmsDataLoading: false,
   favorites: [],
@@ -14,16 +13,10 @@ const initialState: FilmData = {
   hasError: false,
 };
 
-
 export const filmData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {
-    setActiveGenre: (state, action: PayloadAction<{ genre: string }>) => {
-      const { genre } = action.payload;
-      state.activeGenre = genre;
-    }
-  },
+  reducers: { },
   extraReducers(builder) {
     builder
       .addCase(fetchFilmsAction.pending, (state) => {
@@ -76,5 +69,3 @@ export const filmData = createSlice({
       });
   }
 });
-
-export const { setActiveGenre } = filmData.actions;
