@@ -3,11 +3,19 @@ import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
-import { getFilms } from '../../store/film-data/selectors';
+import { getFavoriteDataLoadingStatus, getFavorites } from '../../store/film-data/selectors';
+import Loading from '../loading/loading';
 
 export default function MyList(): JSX.Element {
 
-  const films = useAppSelector(getFilms);
+  const films = useAppSelector(getFavorites);
+  const isFavoriteDataLoading = useAppSelector(getFavoriteDataLoadingStatus);
+
+  if (isFavoriteDataLoading) {
+    return (
+      <Loading />
+    );
+  }
 
   return (
     <div className="user-page">

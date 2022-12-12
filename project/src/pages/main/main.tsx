@@ -2,9 +2,9 @@ import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FilmsType } from '../../types/film';
-import { MAX_COUNT } from '../../const';
+import { MAX_COUNT, MAX_GENRE_COUNT } from '../../const';
 import ShowMore from '../../components/show-more/show-more';
 import { getFilmsByGenre, getGenresList } from '../../services/film';
 import GenresList from '../../components/genre-list/genre-list';
@@ -15,7 +15,7 @@ export default function Main(): JSX.Element {
 
   const films = useAppSelector(getFilms);
   const activeGenre = useAppSelector(getActiveGenre);
-  const genresList = getGenresList(films);
+  const genresList = useMemo(() => getGenresList(films).slice(0, MAX_GENRE_COUNT), [films]);
 
   const [filmsByGenre, sefFilmsByGenre] = useState<FilmsType>([]);
   const [filmCards, setFilmCards] = useState<FilmsType>([]);

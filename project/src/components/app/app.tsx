@@ -1,7 +1,7 @@
 import Main from '../../pages/main/main';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Sign from '../../pages/sign/sign';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import MyList from '../../pages/my-list/my-list';
 import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
@@ -15,6 +15,9 @@ import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getFilmsDataLoadingStatus, getErrorStatus } from '../../store/film-data/selectors';
+import { useEffect } from 'react';
+import { store } from '../../store';
+import { fetchFavoritesAction } from '../../store/api-action';
 
 export default function App(): JSX.Element {
 
@@ -22,6 +25,18 @@ export default function App(): JSX.Element {
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
+
+  useEffect(() => {
+    let isMyListMounted = true;
+
+    if (isMyListMounted && authorizationStatus === AuthorizationStatus.Auth) {
+      store.dispatch(fetchFavoritesAction());
+    }
+
+    return () => {
+      isMyListMounted = false;
+    };
+  }, [authorizationStatus]);
 
   if (!isAuthChecked || isFilmsDataLoading) {
     return (
@@ -75,7 +90,11 @@ export default function App(): JSX.Element {
           />
           <Route
             path={AppRoute.SignIn}
-            element={<Sign />}
+            element={
+              authorizationStatus === AuthorizationStatus.Auth ?
+                <Navigate to={AppRoute.Main} /> :
+                <Sign />
+            }
           />
           <Route
             path="*"

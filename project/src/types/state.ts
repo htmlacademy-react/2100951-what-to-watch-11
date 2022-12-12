@@ -1,17 +1,19 @@
-import {store} from '../store';
-import {AuthorizationStatus} from '../const';
-import {UserData} from './user-data';
+import { store } from '../store';
+import { AuthorizationStatus } from '../const';
+import { UserData } from './user-data';
 import { FilmsType, FilmType } from './film';
 import { ReviewsType } from './review';
 
 export type FilmData = {
   promo?: FilmType;
   film?: FilmType;
+  films: FilmsType;
   reviews: ReviewsType;
   activeGenre: string;
   isFilmDataLoading: boolean;
-  films: FilmsType;
   isFilmsDataLoading: boolean;
+  favorites: FilmsType;
+  isFavoriteDataLoading: boolean;
   hasError: boolean;
 };
 

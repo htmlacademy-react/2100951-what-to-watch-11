@@ -26,13 +26,22 @@ export enum TimeValue {
 }
 
 export enum ErrorMessage {
-    VideoSupport = 'The video tag is not supported by your browser.'
+    VideoSupport = 'The video tag is not supported by your browser.',
+    InvalidEmail = 'Please enter a valid email address',
+    InvalidPassword = 'Please enter a valid password'
 }
 
 export const DEFAULT_GENRE = 'All genres';
 
 export const MAX_COUNT = 8;
+export const MAX_GENRE_COUNT = 9;
 export const RELETED_COUNT = 4;
+export const STARRING_COUNT = 2;
+
+export enum ReviewValue {
+    MinValue = 50,
+    MaxValue = 400
+}
 
 export enum APIRoute {
     Films = '/films',
@@ -40,6 +49,7 @@ export enum APIRoute {
     Login = '/login',
     Logout = '/logout',
     Reviews = '/comments',
+    Favorite = '/favorite'
 }
 
 export enum RatingLevel {

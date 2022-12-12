@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ErrorMessage, TimeValue } from '../../const';
+import { AppRoute, ErrorMessage, TimeValue } from '../../const';
 import Error from '../errors/error';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -15,22 +15,9 @@ export default function Player(): JSX.Element {
   const navigate = useNavigate();
 
   const params = useParams();
-
-  useEffect(() => {
-    let isFilmDetailMounted = true;
-
-    if (isFilmDetailMounted) {
-      store.dispatch(fetchFilmAction(Number(params.id)));
-    }
-
-    return () => {
-      isFilmDetailMounted = false;
-    };
-  }, [params.id]);
-
   const film = useAppSelector(getFilm);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
 
   const [currentTime, setCurrentTime] = useState(0);
@@ -54,6 +41,30 @@ export default function Player(): JSX.Element {
     return result.join(':');
   }
 
+  function openCrossFullScreen(element: HTMLVideoElement): void {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.mozRequestFullscreen) {
+      element.mozRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+
+  useEffect(() => {
+    let isFilmDetailMounted = true;
+
+    if (isFilmDetailMounted) {
+      store.dispatch(fetchFilmAction(Number(params.id)));
+    }
+
+    return () => {
+      isFilmDetailMounted = false;
+    };
+  }, [params.id]);
+
   useEffect(() => {
     let isVideoPlayerMounted = true;
 
@@ -70,8 +81,20 @@ export default function Player(): JSX.Element {
     videoRef.current.addEventListener('timeupdate', () => {
       if (videoRef.current && isVideoPlayerMounted) {
         setCurrentTime(Math.trunc(videoRef.current.currentTime));
+        videoRef.current.play();
       }
     });
+
+    return () => {
+      isVideoPlayerMounted = false;
+    };
+
+  });
+
+  useEffect(() => {
+    if (videoRef.current === null) {
+      return;
+    }
 
     if (isPlaying) {
       videoRef.current.play();
@@ -79,10 +102,6 @@ export default function Player(): JSX.Element {
     }
 
     videoRef.current.pause();
-
-    return () => {
-      isVideoPlayerMounted = false;
-    };
 
   }, [isPlaying]);
 
@@ -92,7 +111,7 @@ export default function Player(): JSX.Element {
     }
 
     if (fullScreen) {
-      videoRef.current.requestFullscreen();
+      openCrossFullScreen(videoRef.current);
     }
 
     return () => setFullScreen(false);
@@ -139,7 +158,7 @@ export default function Player(): JSX.Element {
         ref={videoRef}
         className="player__video"
         poster={film.posterImage}
-        muted={false}
+        muted
       >
         {ErrorMessage.VideoSupport}
       </video>
@@ -147,7 +166,7 @@ export default function Player(): JSX.Element {
       <button
         type="button"
         className="player__exit"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(AppRoute.Main)}
       >
         Exit
       </button>
@@ -158,7 +177,7 @@ export default function Player(): JSX.Element {
             <progress className="player__progress" value={currentTime} max={durationTime}></progress>
             <div className="player__toggler" style={{ left: tooglerValue }}>Toggler</div>
           </div>
-          <div className="player__time-value">{countTimeLeft()}</div>
+          <div className="player__time-value">-{countTimeLeft()}</div>
         </div>
 
         <div className="player__controls-row">
