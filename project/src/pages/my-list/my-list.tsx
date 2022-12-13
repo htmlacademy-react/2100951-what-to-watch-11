@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
-import FilmsList from '../../films-list/films-list';
+import FilmsList from '../../components/films-list/films-list';
 import { useAppSelector } from '../../hooks';
 import { getFavoriteDataLoadingStatus, getFavorites } from '../../store/film-data/selectors';
 import Loading from '../loading/loading';

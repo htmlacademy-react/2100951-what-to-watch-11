@@ -6,7 +6,7 @@ import FilmTabs from '../../components/film-tabs/film-tabs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { RELETED_COUNT } from '../../const';
-import FilmsList from '../../films-list/films-list';
+import FilmsList from '../../components/films-list/films-list';
 import { useAppSelector } from '../../hooks';
 import { getFilmsByGenre } from '../../services/film';
 import { store } from '../../store';

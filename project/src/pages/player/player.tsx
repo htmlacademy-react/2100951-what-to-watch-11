@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppRoute, ErrorMessage, TimeValue } from '../../const';
 import Error from '../errors/error';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
-import { fetchFilmAction } from '../../store/api-action';
 import { getFilm, getFilmDataLoadingStatus } from '../../store/film-data/selectors';
 import Loading from '../loading/loading';
 
@@ -14,7 +12,6 @@ export default function Player(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const params = useParams();
   const film = useAppSelector(getFilm);
 
   const [isPlaying, setIsPlaying] = useState(true);
@@ -52,18 +49,6 @@ export default function Player(): JSX.Element {
       element.msRequestFullscreen();
     }
   }
-
-  useEffect(() => {
-    let isFilmDetailMounted = true;
-
-    if (isFilmDetailMounted) {
-      store.dispatch(fetchFilmAction(Number(params.id)));
-    }
-
-    return () => {
-      isFilmDetailMounted = false;
-    };
-  }, [params.id]);
 
   useEffect(() => {
     let isVideoPlayerMounted = true;
