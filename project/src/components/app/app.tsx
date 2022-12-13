@@ -15,9 +15,6 @@ import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-router/history-router';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getFilmsDataLoadingStatus, getErrorStatus } from '../../store/film-data/selectors';
-import { useEffect } from 'react';
-import { store } from '../../store';
-import { fetchFavoritesAction } from '../../store/api-action';
 
 export default function App(): JSX.Element {
 
@@ -25,18 +22,6 @@ export default function App(): JSX.Element {
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
-
-  useEffect(() => {
-    let isMyListMounted = true;
-
-    if (isMyListMounted && authorizationStatus === AuthorizationStatus.Auth) {
-      store.dispatch(fetchFavoritesAction());
-    }
-
-    return () => {
-      isMyListMounted = false;
-    };
-  }, [authorizationStatus]);
 
   if (!isAuthChecked || isFilmsDataLoading) {
     return (
