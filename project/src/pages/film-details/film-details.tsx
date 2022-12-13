@@ -1,29 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useParams } from 'react-router-dom';
-import FilmDetails from '../../components/details/film-details';
-import Error from '../errors/error';
-import Overview from '../../components/overview/overview';
-import FilmReviews from '../../components/review/review';
-import Header from '../../components/header/header';
-import UserBlock from '../../components/user-block/user-block';
-import Navigation from '../../components/navigation/navigation';
+import { useParams } from 'react-router-dom';
+import FilmCardButtons from '../../components/film-card-buttons/film-card-buttons';
+import FilmTabs from '../../components/film-tabs/film-tabs';
 import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import { RELETED_COUNT } from '../../const';
 import FilmsList from '../../films-list/films-list';
 import { useAppSelector } from '../../hooks';
 import { getFilmsByGenre } from '../../services/film';
-import { AuthorizationStatus, Nav, RELETED_COUNT } from '../../const';
-import Loading from '../loading/loading';
 import { store } from '../../store';
 import { fetchFilmAction, fetchReviewsAction } from '../../store/api-action';
-import { getReviews, getFilms, getFilm, getFilmDataLoadingStatus } from '../../store/film-data/selectors';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFilms, getFilm, getFilmDataLoadingStatus, getReviews } from '../../store/film-data/selectors';
+import Error from '../errors/error';
+import Loading from '../loading/loading';
 
-export default function FilmDetailScreen(): JSX.Element {
-
-  const [currentView, setCurrentView] = useState('overview');
-
+function FilmDetailScreen(): JSX.Element {
   const params = useParams();
+
   useEffect(() => {
     let isFilmDetailMounted = true;
 
@@ -37,11 +31,18 @@ export default function FilmDetailScreen(): JSX.Element {
     };
   }, [params.id]);
 
-  const reviews = useAppSelector(getReviews);
   const films = useAppSelector(getFilms);
   const film = useAppSelector(getFilm);
+  const reviews = useAppSelector(getReviews);
+
   const isFilmDataLoading = useAppSelector(getFilmDataLoadingStatus);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const relatedFilms = useMemo(() => {
+    if (film && films) {
+      return getFilmsByGenre(film.genre, films).slice(0, RELETED_COUNT);
+    }
+    return [];
+  }, [film, films]);
 
   if (isFilmDataLoading) {
     return (
@@ -52,21 +53,6 @@ export default function FilmDetailScreen(): JSX.Element {
   if (!film) {
     return <Error />;
   }
-
-  const relatedFilms = getFilmsByGenre(film.genre, films).slice(0, RELETED_COUNT);
-
-  const renderSwitchView = (): JSX.Element => {
-    switch (currentView) {
-      case Nav.Overview:
-        return <Overview film={film} />;
-      case Nav.Details:
-        return <FilmDetails film={film} />;
-      case Nav.Reviews:
-        return <FilmReviews reviews={reviews} />;
-      default:
-        return <Overview film={film} />;
-    }
-  };
 
   return (
     <>
@@ -83,9 +69,7 @@ export default function FilmDetailScreen(): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header headerClass="page-header film-card__head">
-            <UserBlock />
-          </Header>
+          <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -95,25 +79,10 @@ export default function FilmDetailScreen(): JSX.Element {
                 <span className="film-card__year">{film.released}</span>
               </p>
 
-              <div className="film-card__buttons">
-                <Link to={`/player/${film.id}`} className="btn btn--play film-card__button" >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                {authorizationStatus === AuthorizationStatus.Auth &&
-                  <Link to={`/films/${film.id}/review`} className="btn film-card__button" >Add review</Link>}
-              </div>
+              <FilmCardButtons filmId={film.id} />
             </div>
           </div>
+
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
@@ -123,23 +92,18 @@ export default function FilmDetailScreen(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Navigation currentView={currentView}
-                onTabClick={(view: string) => setCurrentView(view)}
-              />
-
-              {renderSwitchView()}
+              <FilmTabs film={film} reviews = {reviews} />
             </div>
           </div>
         </div>
+
       </section>
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            <FilmsList films={relatedFilms} />
-          </div>
+          <FilmsList films={relatedFilms} />
         </section>
 
         <Footer />
@@ -147,3 +111,5 @@ export default function FilmDetailScreen(): JSX.Element {
     </>
   );
 }
+
+export default FilmDetailScreen;

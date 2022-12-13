@@ -14,17 +14,17 @@ export default function Navigation({ currentView, onTabClick }: NavigationProps)
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
 
-        {tabs.map((item: string) => (
-          <li key={item} className={`film-nav__item ${currentView === item ? 'film-nav__item--active' : ''}`}>
+        {tabs.map((tab: string) => (
+          <li key={tab} className={`film-nav__item ${currentView === tab ? 'film-nav__item--active' : ''}`}>
             <Link
               to="/"
               className="film-nav__link"
               onClick={(evt: React.MouseEvent) => {
                 evt.preventDefault();
-                onTabClick(item);
+                onTabClick(tab);
               }}
             >
-              {item}
+              {tab}
             </Link>
           </li>
         ))}

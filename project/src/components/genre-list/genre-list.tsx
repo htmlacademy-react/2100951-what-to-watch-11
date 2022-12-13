@@ -1,14 +1,14 @@
 import cn from 'classnames';
-import {Link} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
-import { setActiveGenre } from '../../store/film-data/film-data';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { changeFilter, resetFilmsCount } from '../../store/action';
 
 type GenreListProps = {
   currentGenre: string;
   genres: string[];
 }
 
-export default function GenresList({currentGenre, genres}: GenreListProps): JSX.Element {
+export default function GenresList({ currentGenre, genres }: GenreListProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
@@ -20,7 +20,7 @@ export default function GenresList({currentGenre, genres}: GenreListProps): JSX.
           key={genre}
           className={cn(
             'catalog__genres-item',
-            {'catalog__genres-item--active': genre === currentGenre}
+            { 'catalog__genres-item--active': genre === currentGenre }
           )}
         >
           <Link
@@ -28,7 +28,8 @@ export default function GenresList({currentGenre, genres}: GenreListProps): JSX.
             className="catalog__genres-link"
             onClick={(evt: React.MouseEvent) => {
               evt.preventDefault();
-              dispatch(setActiveGenre({genre: genre}));
+              dispatch(changeFilter(genre));
+              dispatch(resetFilmsCount());
             }}
           >
             {genre}
