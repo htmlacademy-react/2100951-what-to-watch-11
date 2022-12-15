@@ -1,11 +1,11 @@
 import {ReviewsType} from '../../types/review';
 import ReviewCard from '../review-card/review-card';
 
-type FilmReviewsProps = {
+type ReviewsProps = {
   reviews: ReviewsType;
 }
 
-export default function FilmReviews({reviews}: FilmReviewsProps): JSX.Element {
+export default function Reviews({reviews}: ReviewsProps): JSX.Element {
 
   const halfSize: number = Math.ceil(reviews.length / 2);
   const leftColumnReviews: ReviewsType = reviews.slice(0, halfSize);

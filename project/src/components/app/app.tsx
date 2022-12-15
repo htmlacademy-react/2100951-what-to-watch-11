@@ -1,6 +1,6 @@
 import Main from '../../pages/main/main';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Sign from '../../pages/sign/sign';
+import Sign from '../../pages/login/login';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MyList from '../../pages/my-list/my-list';
 import Player from '../../pages/player/player';

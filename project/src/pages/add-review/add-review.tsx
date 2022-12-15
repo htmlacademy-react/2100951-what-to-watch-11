@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import AddReviewComponent from '../../components/add-review/add-review';
+import AddReviewComponent from '../../components/add-review/add-review-component';
 import Header from '../../components/header/header';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';

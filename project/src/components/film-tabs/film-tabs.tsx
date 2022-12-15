@@ -5,7 +5,7 @@ import { ReviewsType } from '../../types/review';
 import FilmDetails from '../details/film-details';
 import Navigation from '../navigation/navigation';
 import Overview from '../overview/overview';
-import FilmReviews from '../review/review';
+import Reviews from '../reviews/reviews';
 
 type FilmTabsProps = {
     film: FilmType;
@@ -22,7 +22,7 @@ export default function FilmTabs({ film, reviews }: FilmTabsProps): JSX.Element 
       case Nav.Details:
         return <FilmDetails film={film} />;
       case Nav.Reviews:
-        return <FilmReviews reviews={reviews} />;
+        return <Reviews reviews={reviews} />;
       default:
         return <Overview film={film} />;
     }
