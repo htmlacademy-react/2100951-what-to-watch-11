@@ -14,22 +14,30 @@ export default function Overview({ film }: OverviewProps): JSX.Element {
     starring,
   } = film;
 
+  const Rating = {
+    Bad: 3,
+    Normal: 5,
+    Good: 8,
+    VeryGood: 10,
+    Awesome: 10
+  };
+
   const actorList = starring.join(', ');
 
   const getRatingLevel = () => {
-    if (rating < 3) {
+    if (rating < Rating.Bad) {
       return RatingLevel.Bad;
     }
-    if (rating < 5) {
+    if (rating < Rating.Normal) {
       return RatingLevel.Normal;
     }
-    if (rating < 8) {
+    if (rating < Rating.Good) {
       return RatingLevel.Good;
     }
-    if (rating < 10) {
+    if (rating < Rating.VeryGood) {
       return RatingLevel.VeryGood;
     }
-    if (rating === 10) {
+    if (rating === Rating.Awesome) {
       return RatingLevel.Awesome;
     }
   };

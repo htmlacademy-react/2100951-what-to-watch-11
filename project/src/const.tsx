@@ -36,12 +36,6 @@ export const DEFAULT_GENRE = 'All genres';
 export const MAX_COUNT = 8;
 export const MAX_GENRE_COUNT = 9;
 export const RELETED_COUNT = 4;
-export const STARRING_COUNT = 2;
-
-export enum ReviewValue {
-    MinValue = 50,
-    MaxValue = 400
-}
 
 export enum APIRoute {
     Films = '/films',

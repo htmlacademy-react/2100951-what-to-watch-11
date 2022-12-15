@@ -7,7 +7,7 @@ import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
 import Error from '../../pages/errors/error';
 import PrivateRoute from '../private-route/private-route';
-import FilmDetailScreen from '../../pages/film-details/film-details';
+import FilmDetails from '../../pages/film-details/film-details';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
@@ -71,7 +71,7 @@ export default function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmDetailScreen />}
+            element={<FilmDetails />}
           />
           <Route
             path={AppRoute.SignIn}

@@ -15,7 +15,7 @@ import { getFilms, getFilm, getFilmDataLoadingStatus, getReviews } from '../../s
 import Error from '../errors/error';
 import Loading from '../loading/loading';
 
-function FilmDetailScreen(): JSX.Element {
+function FilmDetails(): JSX.Element {
   const params = useParams();
 
   useEffect(() => {
@@ -112,4 +112,4 @@ function FilmDetailScreen(): JSX.Element {
   );
 }
 
-export default FilmDetailScreen;
+export default FilmDetails;
