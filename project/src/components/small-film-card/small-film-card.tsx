@@ -9,6 +9,7 @@ type SmallFilmCardProps = {
 };
 
 function SmallFilmCard({ film, isActive, setActiveId }: SmallFilmCardProps): JSX.Element {
+  const TIMEOUT = 1000;
   const videoRef = useRef<HTMLVideoElement | null>(null);
   let timerId: NodeJS.Timeout | undefined = undefined;
 
@@ -28,7 +29,7 @@ function SmallFilmCard({ film, isActive, setActiveId }: SmallFilmCardProps): JSX
   }, [isActive]);
 
   const handlerMouseOver = () => {
-    timerId = setTimeout(() => setActiveId(film.id), 1000);
+    timerId = setTimeout(() => setActiveId(film.id), TIMEOUT);
   };
 
   const handlerMouseOut = () => {
